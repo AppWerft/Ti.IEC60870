@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 3
+architectures: armeabi-v7a x86
+description: j60870
+author: Rainer Knöterich
+license: Specify your license
+copyright: Copyright (c) 2017 by 
+
+# these should not be edited
+name: j60870
+moduleid: de.appwerft.j60870
+guid: 848e4f71-6049-4829-bbb0-0e439db8ae64
+platform: android
+minsdk: 6.0.1.GA
