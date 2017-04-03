@@ -48,8 +48,7 @@ module.exports = function(_connection) {
         commonAddress : INT, //the address of the target station or the broadcast address.
         informationObjects : []    
     });
-
-_connection.startDataTransfer();
+    _connection.startDataTransfer(asdu);
 };
 
 ```
