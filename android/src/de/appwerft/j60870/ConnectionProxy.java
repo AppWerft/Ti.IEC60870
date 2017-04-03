@@ -16,25 +16,14 @@ import java.util.concurrent.TimeoutException;
 import javax.net.SocketFactory;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.titanium.TiC;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiConfig;
-import org.appcelerator.titanium.util.TiConvert;
-import org.appcelerator.titanium.proxy.TiViewProxy;
-import org.appcelerator.titanium.view.TiCompositeLayout;
-import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
-import org.appcelerator.titanium.view.TiUIView;
 import org.openmuc.j60870.ASdu;
-import org.openmuc.j60870.CauseOfTransmission;
 import org.openmuc.j60870.ClientConnectionBuilder;
 import org.openmuc.j60870.Connection;
 import org.openmuc.j60870.ConnectionEventListener;
-import org.openmuc.j60870.IeQualifierOfInterrogation;
-import org.openmuc.j60870.IeTime56;
-
-import android.app.Activity;
 
 // This proxy can be created by calling J60870.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = J60870Module.class)
@@ -44,9 +33,12 @@ public class ConnectionProxy extends KrollProxy {
 	// connection params
 	private InetAddress address;
 	private int port;
-	private static Connection connection;
+	private Connection connection;
 	private static final String INTERROGATION_ACTION_KEY = "i";
 	private static final String CLOCK_SYNC_ACTION_KEY = "c";
+	private KrollFunction onLoad;
+	private KrollFunction onError;
+	private KrollFunction onClosed;
 
 	// Constructor
 	public ConnectionProxy() {
@@ -116,25 +108,52 @@ public class ConnectionProxy extends KrollProxy {
 	}
 
 	@Kroll.method
+	public void send() {
+		// ASdu asdu = new ASdu();
+		connection.send(asdu);
+	}
+
+	@Kroll.method
 	public void startDataTransfer(
 			@Kroll.argument(optional = true) KrollDict opts)
-			throws java.io.IOException
-
-	{
-		final int timeout = 10000;
+			throws java.io.IOException {
+		int timeout = 10000;
+		if (opts.containsKeyAndNotNull("timeout"))
+			timeout = opts.getInt("timeout");
+		if (opts.containsKeyAndNotNull("onload")) {
+			Object o = opts.get("onload");
+			if (o instanceof KrollFunction)
+				onLoad = (KrollFunction) o;
+		}
+		if (opts.containsKeyAndNotNull("onclosed")) {
+			Object o = opts.get("onclosed");
+			if (o instanceof KrollFunction)
+				onClosed = (KrollFunction) o;
+		}
+		if (opts.containsKeyAndNotNull("onerror")) {
+			Object o = opts.get("onerror");
+			if (o instanceof KrollFunction)
+				onError = (KrollFunction) o;
+		}
 		try {
 			connection.startDataTransfer(new ConnectionEventListener() {
 				@Override
 				public void connectionClosed(IOException arg0) {
+					if (onClosed != null)
+						onClosed.call(getKrollObject(), new KrollDict());
 				}
 
 				@Override
-				public void newASdu(ASdu arg0) {
+				public void newASdu(ASdu asdu) {
+					if (onLoad != null) {
+						KrollDict kd = new KrollDict();
+						kd.put("asdu", asdu.toString());
+						onLoad.call(getKrollObject(), kd);
+					}
 				}
 
 			}, timeout);
 		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

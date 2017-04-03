@@ -38,8 +38,18 @@ After creation of a connection you can connect:
 Inside of `onConnectHandler.js` can can implement:
 ```javascript
 module.exports = function(_connection) {
-    _connection.startDataTransfer();
-    _connection.send();
+    var asdu = IEC60870.createASdu({
+        typeId : "C_BO_NA_1",
+        causeOfTransmission : "ACTIVATION",
+        isSequenceOfElements : true,
+        test : false,
+        negativeConfirm : false
+        originatorAddress : INT, // the address of the originating controlling station so that responses can be routed back to it
+        commonAddress : INT, //the address of the target station or the broadcast address.
+        informationObjects : []    
+    });
+
+_connection.startDataTransfer();
 };
 
 ```
