@@ -22,11 +22,12 @@ var conn = IEC60870.createConnection({
 	maxTimeNoAckSent : INT,
 	maxUnconfirmedIPdusReceived : INT
 });
-conn.addEventListener("connected",handleCommunication);
-
+conn.connect(onSuccessHandler,onErrorHandler);
 ```
+
 Alternatively to constructor parameters you can provide a json file in you folder Ressources. In this case you can simple connect by
 ```javascript
 var conn = IEC60870.createConnection();
+conn.connect(onSuccessHandler,onErrorHandler);
 ```
 The default path of configuration file `j60870.json` you can overwrite  in your tiapp.xml with parameter `J60870_PATH`. In this case you can only connect one server.  
