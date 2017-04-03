@@ -1,7 +1,7 @@
-Ti.IEC60870-5-104
-=================
+Ti.IEC60870
+===========
 
-This module is the Titanium implementation of IEC 60870-5-104 communication standard. The library can be used to program clients as well as servers. The module is work on progress and not ready for production.
+This module is the Appcelerator Titanium implementation of IEC 60870-5-104 communication standard. The library can be used to program clients as well as servers. The module is work on progress and not ready for production.
 
 
 Usage as client
@@ -23,7 +23,6 @@ var conn = IEC60870.createConnection({
 	maxTimeNoAckSent : INT,
 	maxUnconfirmedIPdusReceived : INT
 });
-conn.connect(require("onConnectHandler"),onErrorHandler);
 ```
 
 Alternatively to constructor parameters you can provide a json file in you folder Ressources. In this case you can simple connect by
@@ -32,6 +31,8 @@ var conn = IEC60870.createConnection();
 conn.connect(require("onConnectHandler"),onErrorHandler);
 ```
 The default path of configuration file `j60870.json` you can overwrite  in your tiapp.xml with parameter `J60870_PATH`. In this case you can only connect one server.  
+
+After creation of a connection you can connect:
 
 
 Inside of `onConnectHandler.js` can can implement:

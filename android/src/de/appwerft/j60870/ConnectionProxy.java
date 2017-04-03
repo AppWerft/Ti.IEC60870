@@ -8,8 +8,12 @@
  */
 package de.appwerft.j60870;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeoutException;
+
+import javax.net.SocketFactory;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
@@ -40,14 +44,39 @@ public class ConnectionProxy extends KrollProxy {
 	// connection params
 	private InetAddress address;
 	private int port;
+	private static Connection connection;
+	private static final String INTERROGATION_ACTION_KEY = "i";
+	private static final String CLOCK_SYNC_ACTION_KEY = "c";
 
 	// Constructor
 	public ConnectionProxy() {
 		super();
 	}
 
+	private static class ClientEventListener implements ConnectionEventListener {
+
+		@Override
+		public void newASdu(ASdu aSdu) {
+			Log.d(LCAT, "\nReceived ASDU:\n" + aSdu);
+
+		}
+
+		@Override
+		public void connectionClosed(IOException e) {
+			System.out.print("Received connection closed signal. Reason: ");
+			if (!e.getMessage().isEmpty()) {
+				Log.d(LCAT, e.getMessage());
+			} else {
+				Log.d(LCAT, "unknown");
+			}
+
+		}
+
+	}
+
 	@Override
-	public void handleCreationDict(KrollDict options) {
+	public void handleCreationDict(
+			@Kroll.argument(optional = true) KrollDict options) {
 		super.handleCreationDict(options);
 		importFromJSON();
 		importOptions(options);
@@ -73,9 +102,40 @@ public class ConnectionProxy extends KrollProxy {
 	}
 
 	private void importFromJSON() {
+		// TODO
 	}
 
 	private void connect() {
-		Connection conn = new ClientConnectionBuilder(address);
+		ClientConnectionBuilder builder = new ClientConnectionBuilder(address);
+		try {
+			connection = builder.setPort(port)
+					.setSocketFactory(SocketFactory.getDefault()).connect();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Kroll.method
+	public void startDataTransfer(
+			@Kroll.argument(optional = true) KrollDict opts)
+			throws java.io.IOException
+
+	{
+		final int timeout = 10000;
+		try {
+			connection.startDataTransfer(new ConnectionEventListener() {
+				@Override
+				public void connectionClosed(IOException arg0) {
+				}
+
+				@Override
+				public void newASdu(ASdu arg0) {
+				}
+
+			}, timeout);
+		} catch (TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
