@@ -8,6 +8,9 @@
  */
 package de.appwerft.j60870;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -19,86 +22,60 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
+import org.openmuc.j60870.ASdu;
+import org.openmuc.j60870.CauseOfTransmission;
+import org.openmuc.j60870.ClientConnectionBuilder;
+import org.openmuc.j60870.Connection;
+import org.openmuc.j60870.ConnectionEventListener;
+import org.openmuc.j60870.IeQualifierOfInterrogation;
+import org.openmuc.j60870.IeTime56;
 
 import android.app.Activity;
 
-
 // This proxy can be created by calling J60870.createExample({message: "hello world"})
-@Kroll.proxy(creatableInModule=J60870Module.class)
-public class IEC60870Proxy extends TiViewProxy
-{
+@Kroll.proxy(creatableInModule = J60870Module.class)
+public class IEC60870Proxy extends KrollProxy {
 	// Standard Debugging variables
-	private static final String LCAT = "ExampleProxy";
-	private static final boolean DBG = TiConfig.LOGD;
-
-	private class ExampleView extends TiUIView
-	{
-		public ExampleView(TiViewProxy proxy) {
-			super(proxy);
-			LayoutArrangement arrangement = LayoutArrangement.DEFAULT;
-
-			if (proxy.hasProperty(TiC.PROPERTY_LAYOUT)) {
-				String layoutProperty = TiConvert.toString(proxy.getProperty(TiC.PROPERTY_LAYOUT));
-				if (layoutProperty.equals(TiC.LAYOUT_HORIZONTAL)) {
-					arrangement = LayoutArrangement.HORIZONTAL;
-				} else if (layoutProperty.equals(TiC.LAYOUT_VERTICAL)) {
-					arrangement = LayoutArrangement.VERTICAL;
-				}
-			}
-			setNativeView(new TiCompositeLayout(proxy.getActivity(), arrangement));
-		}
-
-		@Override
-		public void processProperties(KrollDict d)
-		{
-			super.processProperties(d);
-		}
-	}
-
+	private static final String LCAT = "J60870";
+	// connection params
+	private InetAddress address;
+	private int port;
 
 	// Constructor
-	public IEC60870Proxy()
-	{
+	public IEC60870Proxy() {
 		super();
 	}
 
 	@Override
-	public TiUIView createView(Activity activity)
-	{
-		TiUIView view = new ExampleView(this);
-		view.getLayoutParams().autoFillsHeight = true;
-		view.getLayoutParams().autoFillsWidth = true;
-		return view;
-	}
-
-	// Handle creation options
-	@Override
-	public void handleCreationDict(KrollDict options)
-	{
+	public void handleCreationDict(KrollDict options) {
 		super.handleCreationDict(options);
-
+		importFromJSON();
+		importOptions(options);
+		connect();
 		if (options.containsKey("message")) {
-			Log.d(LCAT, "example created with message: " + options.get("message"));
+			Log.d(LCAT,
+					"example created with message: " + options.get("message"));
 		}
 	}
 
-	// Methods
-	@Kroll.method
-	public void printMessage(String message)
-	{
-		Log.d(LCAT, "printing message: " + message);
+	private void importOptions(KrollDict opts) {
+		if (opts.containsKeyAndNotNull("address")) {
+			try {
+				InetAddress address = InetAddress.getByName(opts
+						.getString("address"));
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+		}
+		if (opts.containsKeyAndNotNull("port")) {
+			int port = opts.getInt("port");
+		}
 	}
 
-
-	@Kroll.getProperty @Kroll.method
-	public String getMessage()
-	{
-        return "Hello World from my module";
+	private void importFromJSON() {
 	}
 
-	@Kroll.setProperty @Kroll.method
-	public void setMessage(String message)
-	{
-	    Log.d(LCAT, "Tried setting module message to: " + message);
+	private void connect() {
+		Connection conn = new ClientConnectionBuilder(address);
 	}
 }
