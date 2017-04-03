@@ -12,6 +12,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/fuerst/Downloads/j60870/build/libs/j60870-1.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/fuerst/Documents/APPC_WORKSPACE/Ti.IEC60870/android/lib/j60870-1.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
