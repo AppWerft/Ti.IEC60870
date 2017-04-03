@@ -3,7 +3,7 @@ Ti.IEC60870
 
 This module is the Appcelerator Titanium implementation of IEC 60870-5-104 communication standard. The library can be used to program clients as well as servers. The module is work on progress and not ready for production.
 
-
+![](https://raw.githubusercontent.com/AppWerft/Ti.IEC60870/master/logo.png)
 Usage as client
 ---------------
 
