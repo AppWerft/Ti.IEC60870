@@ -1,7 +1,8 @@
 Ti.IEC60870-5-104
 =================
 
-This module is the Titanium implementation of  IEC 60870-5-104 communication standard. The library can be used to program clients as well as servers. 
+This module is the Titanium implementation of IEC 60870-5-104 communication standard. The library can be used to program clients as well as servers. The module is work on progress and not ready for production.
+
 
 Usage as client
 ---------------
@@ -36,7 +37,8 @@ The default path of configuration file `j60870.json` you can overwrite  in your 
 Inside of `onConnectHandler.js` can can implement:
 ```javascript
 module.exports = function(_connection) {
-    
+    _connection.startDataTransfer();
+    _connection.send();
 };
 
 ```
