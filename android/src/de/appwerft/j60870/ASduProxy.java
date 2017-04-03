@@ -88,8 +88,8 @@ public class ASduProxy extends KrollProxy {
 				.valueOf("ACTIVATION ");
 		boolean test = false;
 		boolean negativeConfirm = false;
-		int originatorAddress;
-		int commonAddress;
+		int originatorAddress = 0;
+		int commonAddress = 0;
 		InformationObject[] informationObjects;
 
 		super.handleCreationDict(opts);
