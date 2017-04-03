@@ -34,7 +34,7 @@ import android.app.Activity;
 
 // This proxy can be created by calling J60870.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = J60870Module.class)
-public class IEC60870Proxy extends KrollProxy {
+public class ConnectionProxy extends KrollProxy {
 	// Standard Debugging variables
 	private static final String LCAT = "J60870";
 	// connection params
@@ -42,7 +42,7 @@ public class IEC60870Proxy extends KrollProxy {
 	private int port;
 
 	// Constructor
-	public IEC60870Proxy() {
+	public ConnectionProxy() {
 		super();
 	}
 
