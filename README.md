@@ -2,7 +2,7 @@ Ti.IEC60870
 ===========
 
 This module is the Appcelerator Titanium implementation of [IEC 60870-5-104 communication standard](https://en.wikipedia.org/wiki/IEC_60870-5). It is an alternative solution of [NeoSCADA](https://wiki.eclipse.org/EclipseNeoSCADA/IEC60870).104
-Thanks to [Stefan Feuerhahn from Fraunhofer Institute for Solar Energy Systems]((https://www.openmuc.org/iec-60870-5-104/user-guide/)). The library can be used to program clients as well as servers. 
+Thanks to [Stefan Feuerhahn](http://birea.infai.org/referenten/stefan-feuerhahn-fraunhofer-institut-fur-solare-energiesysteme-ise/) from Fraunhofer Institute for Solar Energy Systems for the [Java implementation](https://www.openmuc.org/iec-60870-5-104/user-guide/). 
 
 The module is work on progress and not ready for production.
 
