@@ -43,9 +43,13 @@ Inside of `onConnectHandler.js` the work will done. The payload is an array of i
 module.exports = function(_connection) {
 
     /*A set of Information Elements or a sequence of information element sets. The type of information elements in the set and their order depend on the ASDU's TypeId and is the same for all information objects within one ASDU. If the sequence bit is set in the ASDU then the ASDU contains a single Information Object containing a sequence of information element sets. If the sequence bit is not set the ASDU contains a sequence of information objects each containing only single information elements sets.*/
+    
+    var elem1 = {type:"AFQ",opts : [3, 18]};
+    var elem2 = {type:"BCR",opts : [31, 17, true,true, false]};
+    
     var infoObject = IEC60870.createInformationObject({
         address : 234,  // IOA
-        elems : [{},{},{}]
+        elems : [[elem1,elem2],[elem3,elem4],[elem5,elem6]]
     });
     var ASdu = IEC60870.createASdu({
         typeId : "C_BO_NA_1",
