@@ -51,11 +51,10 @@ module.exports = function(_connection) {
     contains a sequence of information objects each containing only single information elements sets.
     */
     /* In Titanium implementation a JSONArray is using: */
-    var elems = [["AFQ",3, 18],["BCR", 31, 17, true,true, false]]];
-    // must be valide ;-)
+    
     var infoObject = IEC60870.createInformationObject({
         address : 234,  // IOA
-        elems : IEC60870.InformationElement.importElements(elems)
+        elems : IEC60870.createElements([["AFQ",3, 18],["BCR", 31, 17, true,true, false]]])
     });
     var ASdu = IEC60870.createASdu({
         typeId : "C_BO_NA_1",
