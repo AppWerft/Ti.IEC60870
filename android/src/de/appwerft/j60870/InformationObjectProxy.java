@@ -21,11 +21,16 @@ public class InformationObjectProxy extends KrollProxy {
 	// Standard Debugging variables
 	private static final String LCAT = "J60870";
 	private int address;
+	private InformationObject[] infoObj;
 
 	// Constructor
 	public InformationObjectProxy() {
 		super();
 
+	}
+
+	public InformationObject[] getInformationObjects() {
+		return infoObj;
 	}
 
 	@Override

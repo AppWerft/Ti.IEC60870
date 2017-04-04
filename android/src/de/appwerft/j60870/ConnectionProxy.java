@@ -109,8 +109,6 @@ public class ConnectionProxy extends KrollProxy {
 
 	@Kroll.method
 	public void send() {
-		// ASdu asdu = new ASdu();
-		connection.send(asdu);
 	}
 
 	@Kroll.method

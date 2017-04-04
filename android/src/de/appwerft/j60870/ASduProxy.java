@@ -90,7 +90,7 @@ public class ASduProxy extends KrollProxy {
 		boolean negativeConfirm = false;
 		int originatorAddress = 0;
 		int commonAddress = 0;
-		InformationObject[] informationObjects;
+		InformationObject[] informationObjects = null;
 
 		super.handleCreationDict(opts);
 
@@ -102,12 +102,19 @@ public class ASduProxy extends KrollProxy {
 					.getString("COT"));
 		}
 		if (opts.containsKeyAndNotNull("informationObjects")) {
-			informationObjectProxy proxy;
+			InformationObjectProxy proxy;
 			Object o = opts.get("informationObjects");
+			if (o instanceof InformationObjectProxy) {
+				proxy = (InformationObjectProxy) o;
+				informationObjects = proxy.getInformationObjects();
+			}
 		}
 		asdu = new ASdu(typeId, isSequenceOfElements, causeOfTransmission,
 				test, negativeConfirm, originatorAddress, commonAddress,
 				informationObjects);
 	}
 
+	public ASdu getASdu() {
+		return asdu;
+	}
 }
