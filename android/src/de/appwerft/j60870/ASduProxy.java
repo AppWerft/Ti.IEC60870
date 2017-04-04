@@ -97,9 +97,13 @@ public class ASduProxy extends KrollProxy {
 		if (opts.containsKeyAndNotNull("typeId")) {
 			typeId = TypeId.valueOf(opts.getString("typeId"));
 		}
-		if (opts.containsKeyAndNotNull("causeOfTransmission")) {
+		if (opts.containsKeyAndNotNull("COT")) {
 			causeOfTransmission = CauseOfTransmission.valueOf(opts
-					.getString("causeOfTransmission"));
+					.getString("COT"));
+		}
+		if (opts.containsKeyAndNotNull("informationObjects")) {
+			informationObjectProxy proxy;
+			Object o = opts.get("informationObjects");
 		}
 		asdu = new ASdu(typeId, isSequenceOfElements, causeOfTransmission,
 				test, negativeConfirm, originatorAddress, commonAddress,
