@@ -1,8 +1,8 @@
 Ti.IEC60870
 ===========
 
-This module is the Appcelerator Titanium implementation of [IEC 60870-5-104 communication standard](https://www.openmuc.org/iec-60870-5-104/user-guide/). It is an alternative solution of [NeoSCADA](https://wiki.eclipse.org/EclipseNeoSCADA/IEC60870).104
-Thanks to Stefan Feuerhahn from Fraunhofer Institute for Solar Energy Systems. The library can be used to program clients as well as servers. 
+This module is the Appcelerator Titanium implementation of [IEC 60870-5-104 communication standard](https://en.wikipedia.org/wiki/IEC_60870-5). It is an alternative solution of [NeoSCADA](https://wiki.eclipse.org/EclipseNeoSCADA/IEC60870).104
+Thanks to [Stefan Feuerhahn from Fraunhofer Institute for Solar Energy Systems]((https://www.openmuc.org/iec-60870-5-104/user-guide/)). The library can be used to program clients as well as servers. 
 
 The module is work on progress and not ready for production.
 
@@ -38,7 +38,7 @@ The default path of configuration file `j60870.json` you can overwrite  in your 
 After creation of a connection you can connect:
 
 
-Inside of `onConnectHandler.js` can can implement:
+Inside of `onConnectHandler.js` the work will done. The payload is an array of informationObjects. Every informationObject is an array of different informationElements. 
 ```javascript
 module.exports = function(_connection) {
     var infoObject = IEC60870.createInformationObject();
