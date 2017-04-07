@@ -41,6 +41,7 @@ After creation of a connection you can connect:
 Inside of `onConnectHandler.js` the work will done. The payload is an array of informationObjects. Every informationObject is an array of different informationElements. 
 ```javascript
 module.exports = function(_connection) {
+    var Connection = _ connection;
 
     /*
     A set of Information Elements or a sequence of information element sets. 
@@ -66,7 +67,10 @@ module.exports = function(_connection) {
         commonAddress : 23, //the address of the target station or the broadcast address.
         informationObjects : [infoObject]    
     });
-    _connection.startDataTransfer(ASdu);
+    Connection.startDataTransfer(ASdu);
+    Connection.addEventListener("onASduReceived",function(asdu){
+        console.log(asd);
+    });
 };
 
 ```
