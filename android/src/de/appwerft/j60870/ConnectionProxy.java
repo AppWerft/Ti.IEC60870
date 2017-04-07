@@ -34,8 +34,6 @@ public class ConnectionProxy extends KrollProxy {
 	private InetAddress address;
 	private int port;
 	private Connection connection;
-	private static final String INTERROGATION_ACTION_KEY = "i";
-	private static final String CLOCK_SYNC_ACTION_KEY = "c";
 	private KrollFunction onLoad;
 	private KrollFunction onError;
 	private KrollFunction onClosed;
@@ -50,7 +48,6 @@ public class ConnectionProxy extends KrollProxy {
 		@Override
 		public void newASdu(ASdu aSdu) {
 			Log.d(LCAT, "\nReceived ASDU:\n" + aSdu);
-
 		}
 
 		@Override
@@ -61,9 +58,7 @@ public class ConnectionProxy extends KrollProxy {
 			} else {
 				Log.d(LCAT, "unknown");
 			}
-
 		}
-
 	}
 
 	@Override
@@ -73,10 +68,6 @@ public class ConnectionProxy extends KrollProxy {
 		importFromJSON();
 		importOptions(options);
 		connect();
-		if (options.containsKey("message")) {
-			Log.d(LCAT,
-					"example created with message: " + options.get("message"));
-		}
 	}
 
 	private void importOptions(KrollDict opts) {
@@ -108,10 +99,6 @@ public class ConnectionProxy extends KrollProxy {
 	}
 
 	@Kroll.method
-	public void send() {
-	}
-
-	@Kroll.method
 	public void startDataTransfer(
 			@Kroll.argument(optional = true) KrollDict opts)
 			throws java.io.IOException {
@@ -135,16 +122,20 @@ public class ConnectionProxy extends KrollProxy {
 		}
 		try {
 			connection.startDataTransfer(new ConnectionEventListener() {
+				KrollDict kd = new KrollDict();
+
 				@Override
-				public void connectionClosed(IOException arg0) {
+				public void connectionClosed(IOException exc) {
+					kd.clear();
+					kd.put("error", exc.getMessage());
 					if (onClosed != null)
-						onClosed.call(getKrollObject(), new KrollDict());
+						onClosed.call(getKrollObject(), kd);
 				}
 
 				@Override
 				public void newASdu(ASdu asdu) {
+					kd.clear();
 					if (onLoad != null) {
-						KrollDict kd = new KrollDict();
 						kd.put("asdu", asdu.toString());
 						onLoad.call(getKrollObject(), kd);
 					}
@@ -154,5 +145,25 @@ public class ConnectionProxy extends KrollProxy {
 		} catch (TimeoutException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Kroll.method
+	public void send(ASduProxy proxy) {
+		try {
+			connection.send(proxy.getASdu());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Kroll.method
+	public void sendConfirmation(ASduProxy proxy) {
+		try {
+			connection.sendConfirmation(proxy.getASdu());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
