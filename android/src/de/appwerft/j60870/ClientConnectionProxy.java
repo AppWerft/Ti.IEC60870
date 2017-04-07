@@ -27,19 +27,19 @@ import org.openmuc.j60870.ConnectionEventListener;
 
 // This proxy can be created by calling J60870.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = J60870Module.class)
-public class ConnectionProxy extends KrollProxy {
+public class ClientConnectionProxy extends KrollProxy {
 	// Standard Debugging variables
 	private static final String LCAT = "J60870";
 	// connection params
 	private InetAddress address;
 	private int port;
 	private Connection connection;
-	private KrollFunction onLoad;
+	private KrollFunction onASduReceived;
 	private KrollFunction onError;
 	private KrollFunction onClosed;
 
 	// Constructor
-	public ConnectionProxy() {
+	public ClientConnectionProxy() {
 		super();
 	}
 
@@ -105,10 +105,10 @@ public class ConnectionProxy extends KrollProxy {
 		int timeout = 10000;
 		if (opts.containsKeyAndNotNull("timeout"))
 			timeout = opts.getInt("timeout");
-		if (opts.containsKeyAndNotNull("onload")) {
-			Object o = opts.get("onload");
+		if (opts.containsKeyAndNotNull("onASduReceived")) {
+			Object o = opts.get("onASduReceived");
 			if (o instanceof KrollFunction)
-				onLoad = (KrollFunction) o;
+				onASduReceived = (KrollFunction) o;
 		}
 		if (opts.containsKeyAndNotNull("onclosed")) {
 			Object o = opts.get("onclosed");
@@ -135,9 +135,9 @@ public class ConnectionProxy extends KrollProxy {
 				@Override
 				public void newASdu(ASdu asdu) {
 					kd.clear();
-					if (onLoad != null) {
+					if (onASduReceived != null) {
 						kd.put("asdu", asdu.toString());
-						onLoad.call(getKrollObject(), kd);
+						onASduReceived.call(getKrollObject(), kd);
 					}
 				}
 
