@@ -17,7 +17,7 @@ var IEC60870 = require("de.appwerft.j60870");
 
 var conn = IEC60870.Client.createConnection({
 	address : "192.168.0.3",
-	port : 1234,
+	port :  2404,
 	commonAddressFieldLength : INT, // length of the Common Address (CA) field of the ASDU
 	cotFieldLength : INT, // length of the Cause Of Transmission (COT) field of the ASDU
 	ioaFieldLength : INT, //  length of the Information Object Address (IOA) field of the ASDU
@@ -74,3 +74,24 @@ module.exports = function(_connection) {
 };
 
 ```
+Usage as server
+---------------
+
+```javascript
+var IEC60870 = require("de.appwerft.j60870");
+
+var conn = IEC60870.Server.createConnection({
+    address : "192.168.0.3",
+    port :  2404,
+    commonAddressFieldLength : INT, // length of the Common Address (CA) field of the ASDU
+    cotFieldLength : INT, // length of the Cause Of Transmission (COT) field of the ASDU
+    ioaFieldLength : INT, //  length of the Information Object Address (IOA) field of the ASDU
+    maxIdleTime : INT, // maximum time in ms that the connection may be idle before sending a test frame
+    maxTimeNoAckReceived : INT, // maximum time in ms that no acknowledgement has been received (for I-Frames or Test-Frames) before actively closing the connection. 
+    maxTimeNoAckSent : INT,// maximum time in ms that no acknowledgement has been received (for I-Frames or Test-Frames) before actively closing the connection
+    maxUnconfirmedIPdusReceived : INT,
+    maxConnections : INT, // maximum number of client connections that are allowed in parallel
+    backLog : INT // backlog that is passed to the java.net.ServerSocket
+});
+```
+
