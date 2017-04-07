@@ -52,6 +52,8 @@
  /Users/fuerst/Library/android-ndk-macosx/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/V8Util.h \
  jni/de.appwerft.j60870.InformationElementModule.h \
+ jni/de.appwerft.j60870.ClientModule.h \
+ jni/de.appwerft.j60870.ServerModule.h \
  jni/de.appwerft.j60870.ConnectionProxy.h \
  jni/de.appwerft.j60870.ASduProxy.h \
  jni/de.appwerft.j60870.InformationObjectProxy.h \
@@ -161,6 +163,10 @@ jni/de.appwerft.j60870.J60870Module.h:
 /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/V8Util.h:
 
 jni/de.appwerft.j60870.InformationElementModule.h:
+
+jni/de.appwerft.j60870.ClientModule.h:
+
+jni/de.appwerft.j60870.ServerModule.h:
 
 jni/de.appwerft.j60870.ConnectionProxy.h:
 

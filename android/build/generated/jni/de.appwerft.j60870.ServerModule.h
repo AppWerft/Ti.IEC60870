@@ -16,10 +16,10 @@ namespace appwerft {
 namespace j60870 {
 	namespace j60870 {
 
-class ConnectionProxy : public titanium::Proxy
+class ServerModule : public titanium::Proxy
 {
 public:
-	explicit ConnectionProxy(jobject javaObject);
+	explicit ServerModule(jobject javaObject);
 
 	static void bindProxy(v8::Local<v8::Object>, v8::Local<v8::Context>);
 	static v8::Local<v8::FunctionTemplate> getProxyTemplate(v8::Isolate*);
@@ -31,9 +31,7 @@ private:
 	static v8::Persistent<v8::FunctionTemplate> proxyTemplate;
 
 	// Methods -----------------------------------------------------------
-	static void sendConfirmation(const v8::FunctionCallbackInfo<v8::Value>&);
-	static void startDataTransfer(const v8::FunctionCallbackInfo<v8::Value>&);
-	static void send(const v8::FunctionCallbackInfo<v8::Value>&);
+	static void createElements(const v8::FunctionCallbackInfo<v8::Value>&);
 
 	// Dynamic property accessors ----------------------------------------
 

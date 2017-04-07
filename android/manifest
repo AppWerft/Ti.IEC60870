@@ -5,9 +5,9 @@
 version: 1.0.0
 apiversion: 3
 architectures: armeabi-v7a x86
-description: j60870
-author: Rainer Knöterich
-license: Specify your license
+description: Ti.J60870-5-104
+author: Rainer Knöterich Schleevoigt
+license: Apache
 copyright: Copyright (c) 2017 by 
 
 # these should not be edited

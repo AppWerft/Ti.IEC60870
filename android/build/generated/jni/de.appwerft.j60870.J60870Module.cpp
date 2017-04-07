@@ -20,6 +20,8 @@
 
 
 #include "de.appwerft.j60870.InformationElementModule.h"
+#include "de.appwerft.j60870.ClientModule.h"
+#include "de.appwerft.j60870.ServerModule.h"
 
 #include "de.appwerft.j60870.ConnectionProxy.h"
 #include "de.appwerft.j60870.ASduProxy.h"

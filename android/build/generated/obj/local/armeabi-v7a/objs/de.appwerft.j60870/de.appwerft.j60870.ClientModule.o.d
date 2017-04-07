@@ -1,6 +1,6 @@
-/var/folders/dp/_57t8_6j247dh0h7mknf97600000gn/T//fuerst/j60870-generated/obj/local/armeabi-v7a/objs/de.appwerft.j60870/de.appwerft.j60870.J60870Module.o: \
- jni/de.appwerft.j60870.J60870Module.cpp \
- jni/de.appwerft.j60870.J60870Module.h \
+/var/folders/dp/_57t8_6j247dh0h7mknf97600000gn/T//fuerst/j60870-generated/obj/local/armeabi-v7a/objs/de.appwerft.j60870/de.appwerft.j60870.ClientModule.o: \
+ jni/de.appwerft.j60870.ClientModule.cpp \
+ jni/de.appwerft.j60870.ClientModule.h \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/Proxy.h \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/v8.h \
  /Users/fuerst/Library/android-ndk-macosx/sources/cxx-stl/llvm-libc++/../../android/support/include/stdint.h \
@@ -51,16 +51,10 @@
  /Users/fuerst/Library/android-ndk-macosx/sources/cxx-stl/llvm-libc++/libcxx/include/__tree \
  /Users/fuerst/Library/android-ndk-macosx/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/V8Util.h \
- jni/de.appwerft.j60870.InformationElementModule.h \
- jni/de.appwerft.j60870.ClientModule.h \
- jni/de.appwerft.j60870.ServerModule.h \
- jni/de.appwerft.j60870.ConnectionProxy.h \
- jni/de.appwerft.j60870.ASduProxy.h \
- jni/de.appwerft.j60870.InformationObjectProxy.h \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/org.appcelerator.kroll.KrollModule.h \
  /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/Proxy.h
 
-jni/de.appwerft.j60870.J60870Module.h:
+jni/de.appwerft.j60870.ClientModule.h:
 
 /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/Proxy.h:
 
@@ -161,18 +155,6 @@ jni/de.appwerft.j60870.J60870Module.h:
 /Users/fuerst/Library/android-ndk-macosx/sources/cxx-stl/llvm-libc++/libcxx/include/functional:
 
 /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/V8Util.h:
-
-jni/de.appwerft.j60870.InformationElementModule.h:
-
-jni/de.appwerft.j60870.ClientModule.h:
-
-jni/de.appwerft.j60870.ServerModule.h:
-
-jni/de.appwerft.j60870.ConnectionProxy.h:
-
-jni/de.appwerft.j60870.ASduProxy.h:
-
-jni/de.appwerft.j60870.InformationObjectProxy.h:
 
 /Library/Application\ Support/Titanium/mobilesdk/osx/6.0.1.GA/android/native/include/org.appcelerator.kroll.KrollModule.h:
 

@@ -83,8 +83,9 @@ Local<FunctionTemplate> ConnectionProxy::getProxyTemplate(Isolate* isolate)
 	titanium::ProxyFactory::registerProxyPair(javaClass, *t);
 
 	// Method bindings --------------------------------------------------------
-	titanium::SetProtoMethod(isolate, t, "send", ConnectionProxy::send);
+	titanium::SetProtoMethod(isolate, t, "sendConfirmation", ConnectionProxy::sendConfirmation);
 	titanium::SetProtoMethod(isolate, t, "startDataTransfer", ConnectionProxy::startDataTransfer);
+	titanium::SetProtoMethod(isolate, t, "send", ConnectionProxy::send);
 
 	Local<ObjectTemplate> prototypeTemplate = t->PrototypeTemplate();
 	Local<ObjectTemplate> instanceTemplate = t->InstanceTemplate();
@@ -103,9 +104,9 @@ Local<FunctionTemplate> ConnectionProxy::getProxyTemplate(Isolate* isolate)
 }
 
 // Methods --------------------------------------------------------------------
-void ConnectionProxy::send(const FunctionCallbackInfo<Value>& args)
+void ConnectionProxy::sendConfirmation(const FunctionCallbackInfo<Value>& args)
 {
-	LOGD(TAG, "send()");
+	LOGD(TAG, "sendConfirmation()");
 	Isolate* isolate = args.GetIsolate();
 	HandleScope scope(isolate);
 
@@ -116,9 +117,9 @@ void ConnectionProxy::send(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(ConnectionProxy::javaClass, "send", "()V");
+		methodID = env->GetMethodID(ConnectionProxy::javaClass, "sendConfirmation", "(Lde/appwerft/j60870/ASduProxy;)V");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'send' with signature '()V'";
+			const char *error = "Couldn't find proxy method 'sendConfirmation' with signature '(Lde/appwerft/j60870/ASduProxy;)V'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -133,7 +134,35 @@ void ConnectionProxy::send(const FunctionCallbackInfo<Value>& args)
 
 	titanium::Proxy* proxy = titanium::Proxy::unwrap(holder);
 
-	jvalue* jArguments = 0;
+	if (args.Length() < 1) {
+		char errorStringBuffer[100];
+		sprintf(errorStringBuffer, "sendConfirmation: Invalid number of arguments. Expected 1 but got %d", args.Length());
+		titanium::JSException::Error(isolate, errorStringBuffer);
+		return;
+	}
+
+	jvalue jArguments[1];
+
+
+
+
+	if (!args[0]->IsObject() && !args[0]->IsNull()) {
+		const char *error = "Invalid value, expected type Object.";
+		LOGE(TAG, error);
+		titanium::JSException::Error(isolate, error);
+		return;
+	}
+	bool isNew_0;
+
+	if (!args[0]->IsNull()) {
+		Local<Object> arg_0 = args[0]->ToObject(isolate);
+		jArguments[0].l =
+			titanium::TypeConverter::jsValueToJavaObject(
+				isolate,
+				env, arg_0, &isNew_0);
+	} else {
+		jArguments[0].l = NULL;
+	}
 
 	jobject javaProxy = proxy->getJavaObject();
 	env->CallVoidMethodA(javaProxy, methodID, jArguments);
@@ -142,6 +171,11 @@ void ConnectionProxy::send(const FunctionCallbackInfo<Value>& args)
 		env->DeleteLocalRef(javaProxy);
 	}
 
+
+
+			if (isNew_0) {
+				env->DeleteLocalRef(jArguments[0].l);
+			}
 
 
 	if (env->ExceptionCheck()) {
@@ -206,6 +240,91 @@ void ConnectionProxy::startDataTransfer(const FunctionCallbackInfo<Value>& args)
 	} else {
 		jArguments[0].l = NULL;
 	}
+	}
+
+	jobject javaProxy = proxy->getJavaObject();
+	env->CallVoidMethodA(javaProxy, methodID, jArguments);
+
+	if (!JavaObject::useGlobalRefs) {
+		env->DeleteLocalRef(javaProxy);
+	}
+
+
+
+			if (isNew_0) {
+				env->DeleteLocalRef(jArguments[0].l);
+			}
+
+
+	if (env->ExceptionCheck()) {
+		titanium::JSException::fromJavaException(isolate);
+		env->ExceptionClear();
+	}
+
+
+
+
+	args.GetReturnValue().Set(v8::Undefined(isolate));
+
+}
+void ConnectionProxy::send(const FunctionCallbackInfo<Value>& args)
+{
+	LOGD(TAG, "send()");
+	Isolate* isolate = args.GetIsolate();
+	HandleScope scope(isolate);
+
+	JNIEnv *env = titanium::JNIScope::getEnv();
+	if (!env) {
+		titanium::JSException::GetJNIEnvironmentError(isolate);
+		return;
+	}
+	static jmethodID methodID = NULL;
+	if (!methodID) {
+		methodID = env->GetMethodID(ConnectionProxy::javaClass, "send", "(Lde/appwerft/j60870/ASduProxy;)V");
+		if (!methodID) {
+			const char *error = "Couldn't find proxy method 'send' with signature '(Lde/appwerft/j60870/ASduProxy;)V'";
+			LOGE(TAG, error);
+				titanium::JSException::Error(isolate, error);
+				return;
+		}
+	}
+
+	Local<Object> holder = args.Holder();
+	// If holder isn't the JavaObject wrapper we expect, look up the prototype chain
+	if (!JavaObject::isJavaObject(holder)) {
+		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
+	}
+
+	titanium::Proxy* proxy = titanium::Proxy::unwrap(holder);
+
+	if (args.Length() < 1) {
+		char errorStringBuffer[100];
+		sprintf(errorStringBuffer, "send: Invalid number of arguments. Expected 1 but got %d", args.Length());
+		titanium::JSException::Error(isolate, errorStringBuffer);
+		return;
+	}
+
+	jvalue jArguments[1];
+
+
+
+
+	if (!args[0]->IsObject() && !args[0]->IsNull()) {
+		const char *error = "Invalid value, expected type Object.";
+		LOGE(TAG, error);
+		titanium::JSException::Error(isolate, error);
+		return;
+	}
+	bool isNew_0;
+
+	if (!args[0]->IsNull()) {
+		Local<Object> arg_0 = args[0]->ToObject(isolate);
+		jArguments[0].l =
+			titanium::TypeConverter::jsValueToJavaObject(
+				isolate,
+				env, arg_0, &isNew_0);
+	} else {
+		jArguments[0].l = NULL;
 	}
 
 	jobject javaProxy = proxy->getJavaObject();
